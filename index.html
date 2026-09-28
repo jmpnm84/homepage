@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="pt" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PTCNT App Homepage</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            800: '#1e40af',
+                            900: '#1e3a8a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 min-h-screen flex flex-col transition-colors duration-300">
+
+    <!-- Header / Navbar -->
+    <header class="sticky top-0 z-50 backdrop-blur-md bg-white/80 dark:bg-slate-900/80 border-b border-slate-200 dark:border-slate-800 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center text-white shadow-md shadow-blue-500/20">
+                    <i class="fa-solid fa-shapes text-lg"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold text-lg tracking-tight bg-gradient-to-r from-blue-600 to-indigo-500 bg-clip-text text-transparent">jmpnm84 Dashboard</h1>
+                    <p class="text-xs text-slate-500 dark:text-slate-400">Portal de Ferramentas e Aplicações</p>
+                </div>
+            </div>
+
+            <div class="flex items-center space-x-4">
+                <!-- Theme Toggle Button -->
+                <button id="themeToggle" class="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all focus:outline-none focus:ring-2 focus:ring-blue-500" aria-label="Alternar tema">
+                    <i id="themeIcon" class="fa-solid fa-moon text-sm"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full">
+        <!-- Hero Search Section -->
+        <div class="mb-10 text-center max-w-2xl mx-auto">
+            <h2 class="text-3xl font-extrabold tracking-tight mb-3">Bem-vindo ao seu Portal</h2>
+            <p class="text-slate-600 dark:text-slate-400 text-sm sm:text-base mb-6">Aceda rapidamente a todas as aplicações web e ferramentas operacionais num só lugar.</p>
+            
+            <!-- Search Bar -->
+            <div class="relative shadow-lg rounded-2xl">
+                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400">
+                    <i class="fa-solid fa-search"></i>
+                </div>
+                <input type="text" id="searchInput" placeholder="Pesquisar por nome ou descrição..." class="w-full pl-11 pr-4 py-3.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl focus:outline-none focus:ring-2 focus:ring-blue-500 text-slate-900 dark:text-slate-100 placeholder-slate-400 transition-all text-sm sm:text-base">
+                <div class="absolute inset-y-0 right-0 pr-3 flex items-center">
+                    <span id="resultCount" class="text-xs font-medium px-2.5 py-1 bg-slate-100 dark:bg-slate-800 text-slate-500 rounded-lg">10 Apps</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Grid of Cards -->
+        <div id="appsGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <!-- App Cards will be injected dynamically via JS -->
+        </div>
+
+        <!-- Empty State (Hidden by default) -->
+        <div id="emptyState" class="hidden text-center py-16">
+            <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-400 text-xl">
+                <i class="fa-solid fa-face-frown"></i>
+            </div>
+            <h3 class="text-lg font-medium text-slate-700 dark:text-slate-300">Nenhuma aplicação encontrada</h3>
+            <p class="text-sm text-slate-500 mt-1">Tente pesquisar com outro termo.</p>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 py-6 text-center text-xs text-slate-500 dark:text-slate-400 transition-colors duration-300">
+        <p>&copy; 2026 jmpnm84. Todos os direitos reservados. Feito com ❤️ para máxima produtividade.</p>
+    </footer>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        const apps = [
+            {
+                id: 'calculadora3D',
+                name: 'calculadora3D',
+                title: 'Calculadora 3D',
+                description: 'Ferramenta avançada para cálculos e projeções em três dimensões.',
+                url: 'https://jmpnm84.github.io/calculadora3D',
+                icon: 'fa-cube',
+                bgLight: 'bg-blue-50 text-blue-600',
+                bgDark: 'dark:bg-blue-950/40 dark:text-blue-400'
+            },
+            {
+                id: 'livrobordo',
+                name: 'livrobordo',
+                title: 'Livro de Bordo',
+                description: 'Livro de Bordo digital e registo de operações dos empilhadores.',
+                url: 'https://jmpnm84.github.io/livrobordo',
+                icon: 'fa-truck-ramp-box',
+                bgLight: 'bg-amber-50 text-amber-600',
+                bgDark: 'dark:bg-amber-950/40 dark:text-amber-400'
+            },
+            {
+                id: 'stop',
+                name: 'stop',
+                title: 'Cartões STOP',
+                description: 'WebApp para preenchimento e impressão imediata de Cartões STOP.',
+                url: 'https://jmpnm84.github.io/stop',
+                icon: 'fa-hand-paper',
+                bgLight: 'bg-rose-50 text-rose-600',
+                bgDark: 'dark:bg-rose-950/40 dark:text-rose-400'
+            },
+            {
+                id: 'quarentena',
+                name: 'quarentena',
+                title: 'Quarentena de Peças',
+                description: 'Registo rigoroso de entrada e saída de peças na zona de quarentena.',
+                url: 'https://jmpnm84.github.io/quarentena',
+                icon: 'fa-triangle-exclamation',
+                bgLight: 'bg-yellow-50 text-yellow-600',
+                bgDark: 'dark:bg-yellow-950/40 dark:text-yellow-400'
+            },
+            {
+                id: 'trigo_trace',
+                name: 'trigo_trace',
+                title: 'Traceability',
+                description: 'Sistema completo de rastreabilidade para processos da Trigo.',
+                url: 'https://jmpnm84.github.io/trigo_trace',
+                icon: 'fa-barcode',
+                bgLight: 'bg-cyan-50 text-cyan-600',
+                bgDark: 'dark:bg-cyan-950/40 dark:text-cyan-400'
+            },
+            {
+                id: 'etiquetas',
+                name: 'etiquetas',
+                title: 'Etiquetas Pequenas',
+                description: 'Impressão facilitada de informações em etiquetas pequenas da Trigo.',
+                url: 'https://jmpnm84.github.io/etiquetas',
+                icon: 'fa-tags',
+                bgLight: 'bg-indigo-50 text-indigo-600',
+                bgDark: 'dark:bg-indigo-950/40 dark:text-indigo-400'
+            },
+            {
+                id: 'trigo_bosch',
+                name: 'trigo_bosch',
+                title: 'Picagens Bosch',
+                description: 'Registo e controlo de picagens Trigo no posto da Bosch.',
+                url: 'https://jmpnm84.github.io/trigo_bosch',
+                icon: 'fa-industry',
+                bgLight: 'bg-sky-50 text-sky-600',
+                bgDark: 'dark:bg-sky-950/40 dark:text-sky-400'
+            },
+            {
+                id: 'trigo_peb',
+                name: 'trigo_peb',
+                title: 'Trigo PEB',
+                description: 'Aplicação dedicada para operações e fluxos Trigo PEB.',
+                url: 'https://jmpnm84.github.io/trigo_peb',
+                icon: 'fa-network-wired',
+                bgLight: 'bg-teal-50 text-teal-600',
+                bgDark: 'dark:bg-teal-950/40 dark:text-teal-400'
+            },
+            {
+                id: 'trigo_inventario',
+                name: 'trigo_inventario',
+                title: 'App de Inventário',
+                description: 'Gestão de inventário e contagem de stock para a Trigo.',
+                url: 'https://jmpnm84.github.io/trigo_inventario',
+                icon: 'fa-boxes-stacked',
+                bgLight: 'bg-blue-600/10 text-blue-700',
+                bgDark: 'dark:bg-blue-950/40 dark:text-blue-300'
+            },
+            {
+                id: 'trigo_incoming',
+                name: 'trigo_incoming',
+                title: 'Trigo Incoming',
+                description: 'Controlo e receção de materiais e carga entrantes.',
+                url: 'https://jmpnm84.github.io/trigo_incoming',
+                icon: 'fa-boxes-packing',
+                bgLight: 'bg-violet-50 text-violet-700',
+                bgDark: 'dark:bg-violet-950/40 dark:text-violet-300'
+            }
+        ];
+
+        const appsGrid = document.getElementById('appsGrid');
+        const searchInput = document.getElementById('searchInput');
+        const emptyState = document.getElementById('emptyState');
+        const resultCount = document.getElementById('resultCount');
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+        const htmlElement = document.documentElement;
+
+        function renderApps(filterText = '') {
+            const filtered = apps.filter(app => 
+                app.name.toLowerCase().includes(filterText.toLowerCase()) || 
+                app.title.toLowerCase().includes(filterText.toLowerCase()) || 
+                app.description.toLowerCase().includes(filterText.toLowerCase())
+            );
+
+            resultCount.textContent = `${filtered.length} App${filtered.length === 1 ? '' : 's'}`;
+
+            if (filtered.length === 0) {
+                appsGrid.innerHTML = '';
+                emptyState.classList.remove('hidden');
+                return;
+            }
+
+            emptyState.classList.add('hidden');
+            
+            appsGrid.innerHTML = filtered.map(app => `
+                <a href="${app.url}" target="_blank" rel="noopener noreferrer" 
+                   class="group relative bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm hover:shadow-xl hover:border-blue-500/50 dark:hover:border-blue-500/50 transition-all duration-300 flex flex-col justify-between transform hover:-translate-y-1">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="w-12 h-12 rounded-xl ${app.bgLight} ${app.bgDark} flex items-center justify-center text-lg transition-transform group-hover:scale-110 duration-300">
+                                <i class="fa-solid ${app.icon}"></i>
+                            </div>
+                            <span class="text-slate-400 group-hover:text-blue-500 dark:group-hover:text-blue-400 transition-colors text-sm">
+                                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                            </span>
+                        </div>
+                        <h3 class="font-semibold text-slate-900 dark:text-white text-base mb-1 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">${app.title}</h3>
+                        <p class="text-xs font-mono text-blue-600/70 dark:text-blue-400/70 mb-2">${app.name}</p>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 line-clamp-2 leading-relaxed">${app.description}</p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs text-slate-400">
+                        <span class="truncate max-w-[180px] font-mono opacity-70">jmpnm84.github.io/${app.name}</span>
+                        <span class="font-medium text-blue-600 dark:text-blue-400 opacity-0 group-hover:opacity-100 transition-opacity">Abrir &rarr;</span>
+                    </div>
+                </a>
+            `).join('');
+        }
+
+        searchInput.addEventListener('input', (e) => {
+            renderApps(e.target.value);
+        });
+
+        themeToggle.addEventListener('click', () => {
+            if (htmlElement.classList.contains('dark')) {
+                htmlElement.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+                themeIcon.className = 'fa-solid fa-sun text-sm text-amber-500';
+            } else {
+                htmlElement.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+                themeIcon.className = 'fa-solid fa-moon text-sm';
+            }
+        });
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'light') {
+                htmlElement.classList.remove('dark');
+                themeIcon.className = 'fa-solid fa-sun text-sm text-amber-500';
+            } else {
+                htmlElement.classList.add('dark');
+                themeIcon.className = 'fa-solid fa-moon text-sm';
+            }
+            renderApps();
+        });
+    </script>
+</body>
+</html>
