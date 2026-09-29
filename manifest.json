@@ -1,6 +1,6 @@
 {
-  "name": "Dashboard Trigo & Ferramentas",
-  "short_name": "Dashboard",
+  "name": "Dashboard Ferramentas",
+  "short_name": "Homepage",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#0f172a",
@@ -8,13 +8,13 @@
   "orientation": "any",
   "icons": [
     {
-      "src": "https://cdn-icons-png.flaticon.com/512/3019/3019777.png",
+      "src": "https://github.com/user-attachments/assets/2c26a2c5-5b5f-4ade-8129-7f38c11dca39",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "https://cdn-icons-png.flaticon.com/512/3019/3019777.png",
+      "src": "https://github.com/user-attachments/assets/2c26a2c5-5b5f-4ade-8129-7f38c11dca39",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
